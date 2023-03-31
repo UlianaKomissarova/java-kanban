@@ -7,9 +7,9 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         Task walk = new Task(
-            "Погулять",
-            "Идем гулять в парк!",
-            Status.NEW
+                "Погулять",
+                "Идем гулять в парк!",
+                Status.NEW
         );
 
         Task playWithCat = new Task(
@@ -19,9 +19,9 @@ public class Main {
         );
 
         Subtask packUp = new Subtask(
-            "Собрать вещи",
-            "Возьми все самое нужное с собой",
-            Status.NEW
+                "Собрать вещи",
+                "Возьми все самое нужное с собой",
+                Status.NEW
         );
 
         Subtask rentFlat = new Subtask(
