@@ -39,7 +39,7 @@ public class Task {
         return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", id='" + TaskManager.taskId + '\'' +
+                ", id='" + InMemoryTaskManager.taskId + '\'' +
                 ", status='" + status + "'" +
                 '}';
     }

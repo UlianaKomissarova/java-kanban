@@ -4,7 +4,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
         Task walk = new Task(
                 "Погулять",
@@ -123,6 +124,22 @@ public class Main {
                     }
                     break;
                 case 4:
+                    historyManager.add(taskManager.getTaskById(1));
+                    historyManager.add(taskManager.getTaskById(2));
+                    historyManager.add(taskManager.getTaskById(1));
+                    historyManager.add(taskManager.getTaskById(2));
+                    historyManager.add(taskManager.getTaskById(1));
+                    historyManager.add(taskManager.getTaskById(2));
+                    historyManager.add(taskManager.getTaskById(1));
+                    historyManager.add(taskManager.getTaskById(2));
+                    historyManager.add(taskManager.getTaskById(1));
+                    historyManager.add(taskManager.getTaskById(2));
+                    historyManager.add(taskManager.getTaskById(7));
+                    historyManager.add(taskManager.getTaskById(6));
+                    for (Task task : historyManager.getHistory()) {
+                        System.out.println(task);
+                    }
+                case 5:
                     System.out.println("До свидания");
                     return;
                 default:
@@ -136,6 +153,7 @@ public class Main {
         System.out.println("1 - Получить список задач");
         System.out.println("2 - Изменить статус задачи");
         System.out.println("3 - Удалить задачу");
-        System.out.println("4 - Выход");
+        System.out.println("4 - Просмотреть историю задач");
+        System.out.println("5 - Выход");
     }
 }
