@@ -139,6 +139,7 @@ public class Main {
                     for (Task task : historyManager.getHistory()) {
                         System.out.println(task);
                     }
+                    break;
                 case 5:
                     System.out.println("До свидания");
                     return;
