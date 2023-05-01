@@ -38,9 +38,16 @@ public class Main {
                 Status.NEW
         );
 
+        Subtask refuelCar = new Subtask(
+                "Заправить машину",
+                "До полного бака",
+                Status.NEW
+        );
+
         ArrayList<Subtask> seaTasks = new ArrayList<>();
         seaTasks.add(packUp);
         seaTasks.add(rentFlat);
+        seaTasks.add(refuelCar);
 
         Epic moveToSea = new Epic(
                 "Переезд",
@@ -49,14 +56,7 @@ public class Main {
                 seaTasks
         );
 
-        Subtask goForAnInterview = new Subtask(
-                "Пойти на собеседование",
-                "Рассказать о себе",
-                Status.NEW
-        );
-
         ArrayList<Subtask> jobTasks = new ArrayList<>();
-        jobTasks.add(goForAnInterview);
 
         Epic getJob = new Epic(
                 "Найти работу",
@@ -91,8 +91,8 @@ public class Main {
         System.out.println("Введите id эпика: ");
         System.out.println("1 - " + moveToSea.getName());
         System.out.println("2 - " + getJob.getName());
-        taskManager.createNewTask(goForAnInterview);
-        System.out.println("Cоздана задача: " + goForAnInterview.getName());
+        taskManager.createNewTask(refuelCar);
+        System.out.println("Cоздана задача: " + refuelCar.getName());
 
         while (true) {
             printMenu();
@@ -135,6 +135,12 @@ public class Main {
                     historyManager.add(taskManager.getTaskById(2));
                     historyManager.add(taskManager.getTaskById(1));
                     historyManager.add(taskManager.getTaskById(2));
+
+                    System.out.println("Проверка на повторы:");
+                    for (Task task : historyManager.getHistory()) {
+                        System.out.println(task);
+                    }
+
                     historyManager.add(taskManager.getTaskById(1));
                     historyManager.add(taskManager.getTaskById(2));
                     historyManager.add(taskManager.getTaskById(1));
@@ -143,9 +149,18 @@ public class Main {
                     historyManager.add(taskManager.getTaskById(2));
                     historyManager.add(taskManager.getTaskById(7));
                     historyManager.add(taskManager.getTaskById(6));
+
+                    System.out.println("Проверим список:");
                     for (Task task : historyManager.getHistory()) {
                         System.out.println(task);
                     }
+
+                    historyManager.remove(1);
+                    System.out.println("Проверим список после удаления эпика:");
+                    for (Task task : historyManager.getHistory()) {
+                        System.out.println(task);
+                    }
+
                     break;
                 case 5:
                     System.out.println("До свидания");
