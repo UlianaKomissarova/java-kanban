@@ -11,21 +11,26 @@ import java.util.Scanner;
 
 public class InMemoryTaskManager implements TaskManager {
     public static int taskId;
-    private HashMap<Integer, Task> taskMap = new HashMap<>();
-    private HashMap<Integer, Subtask> subtaskMap = new HashMap<>();
-    private HashMap<Integer, Epic> epicMap = new HashMap<>();
+    protected HashMap<Integer, Task> taskMap = new HashMap<>();
+    protected HashMap<Integer, Subtask> subtaskMap = new HashMap<>();
+    protected HashMap<Integer, Epic> epicMap = new HashMap<>();
 
     @Override
     public void createNewTask(Task task) {
         Scanner scanner = new Scanner(System.in);
 
         if (task instanceof Subtask) {
-            int epicId = scanner.nextInt();
-
-            if (epicMap.containsKey(epicId)) {
-                task.setId(++taskId);
-                subtaskMap.put(task.getId(), (Subtask) task);
-            }
+            // TODO: Я закомментировала код, который был написан до этого, потому что не поняла, чем он отличается
+            // TODO: от действующего и что выполняет (на 32-33 новый код).
+            // TODO: Мог бы ты подсказать, пожалуйста, нужно ли убирать этот код? Как будто без него все работает.
+//            int epicId = scanner.nextInt();
+//
+//            if (epicMap.containsKey(epicId)) {
+//                task.setId(++taskId);
+//                subtaskMap.put(task.getId(), (Subtask) task);
+//            }
+            task.setId(++taskId);
+            subtaskMap.put(task.getId(), (Subtask) task);
         } else if (task instanceof Epic) {
             task.setId(++taskId);
             epicMap.put(task.getId(), (Epic) task);
@@ -115,6 +120,15 @@ public class InMemoryTaskManager implements TaskManager {
         for (Epic epic : epicMap.values()) {
             list.add(epic.toString());
         }
+
+        return list;
+    }
+
+    public ArrayList<Task> getTasks() {
+        ArrayList<Task> list = new ArrayList<>();
+        list.addAll(taskMap.values());
+        list.addAll(subtaskMap.values());
+        list.addAll(epicMap.values());
 
         return list;
     }

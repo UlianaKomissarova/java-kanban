@@ -5,6 +5,11 @@ public class Subtask extends Task {
 
     public Subtask(String name, String description, Status status) {
         super(name, description, status);
+        super.setType(Type.SUBTASK);
+    }
+
+    public Epic getEpic() {
+        return epic;
     }
 
     public void setEpic(Epic epic) {

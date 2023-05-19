@@ -12,7 +12,7 @@ import java.util.List;
 public class InMemoryHistoryManager implements HistoryManager {
     private Node<Task> head;
     private Node<Task> tail;
-    private HashMap<Integer, Node<Task>> taskHistory = new HashMap<>();
+    private final HashMap<Integer, Node<Task>> taskHistory = new HashMap<>();
 
     public void linkLast(Task current) {
         if (taskHistory.size() == 0) {
