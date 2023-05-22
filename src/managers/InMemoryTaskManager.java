@@ -7,7 +7,6 @@ import tasks.Status;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class InMemoryTaskManager implements TaskManager {
     public static int taskId;
@@ -17,18 +16,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createNewTask(Task task) {
-        Scanner scanner = new Scanner(System.in);
-
         if (task instanceof Subtask) {
-            // TODO: Я закомментировала код, который был написан до этого, потому что не поняла, чем он отличается
-            // TODO: от действующего и что выполняет (на 32-33 новый код).
-            // TODO: Мог бы ты подсказать, пожалуйста, нужно ли убирать этот код? Как будто без него все работает.
-//            int epicId = scanner.nextInt();
-//
-//            if (epicMap.containsKey(epicId)) {
-//                task.setId(++taskId);
-//                subtaskMap.put(task.getId(), (Subtask) task);
-//            }
             task.setId(++taskId);
             subtaskMap.put(task.getId(), (Subtask) task);
         } else if (task instanceof Epic) {
