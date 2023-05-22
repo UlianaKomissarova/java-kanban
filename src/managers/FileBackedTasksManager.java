@@ -40,7 +40,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    public void save() {
+    private void save() {
         try (FileWriter writer = new FileWriter(file)) {
             StringBuilder sb = new StringBuilder(FORMAT);
 
@@ -195,20 +195,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public void removeTaskById(Integer id) {
         super.removeTaskById(id);
         save();
-    }
-
-    @Override
-    public Task getTaskById(Integer id) {
-        return super.getTaskById(id);
-    }
-
-    @Override
-    public ArrayList<String> getTaskList() {
-        return super.getTaskList();
-    }
-
-    @Override
-    public ArrayList<Subtask> getEpicSubtaskList(Integer epicId) {
-        return super.getEpicSubtaskList(epicId);
     }
 }
