@@ -16,16 +16,97 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createNewTask(Task task) {
-        if (task instanceof Subtask) {
-            task.setId(++taskId);
-            subtaskMap.put(task.getId(), (Subtask) task);
-        } else if (task instanceof Epic) {
-            task.setId(++taskId);
-            epicMap.put(task.getId(), (Epic) task);
-        } else if (task != null) {
+        if (task != null) {
             task.setId(++taskId);
             taskMap.put(task.getId(), task);
         }
+    }
+
+    @Override
+    public void createNewSubtask(Subtask subtask) {
+        if (subtask != null) {
+            subtask.setId(++taskId);
+            subtaskMap.put(subtask.getId(), subtask);
+        }
+    }
+
+    @Override
+    public void createNewEpic(Epic epic) {
+        if (epic != null) {
+            epic.setId(++taskId);
+            epicMap.put(epic.getId(), epic);
+        }
+    }
+
+    @Override
+    public void updateTask(Task task) {
+        taskMap.put(task.getId(), task);
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        subtaskMap.put(subtask.getId(), subtask);
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        if (epic.getEpicSubtasks().isEmpty()) {
+            epic.setStatus(Status.NEW);
+            return;
+        }
+
+        for (Subtask subtask : epic.getEpicSubtasks()) {
+            if (subtask.getStatus().equals("NEW")) {
+                epic.setStatus(Status.NEW);
+            } else {
+                epic.setStatus(Status.IN_PROGRESS);
+                break;
+            }
+        }
+
+        for (Subtask subtask : epic.getEpicSubtasks()) {
+            if (subtask.getStatus().equals("DONE")) {
+                epic.setStatus(Status.DONE);
+            } else {
+                epic.setStatus(Status.IN_PROGRESS);
+                break;
+            }
+        }
+
+        epicMap.put(epic.getId(), epic);
+    }
+
+    @Override
+    public ArrayList<String> getTaskList() {
+        ArrayList<String> taskList = new ArrayList<>();
+
+        for (Task task : taskMap.values()) {
+            taskList.add(task.toString());
+        }
+
+        return taskList;
+    }
+
+    @Override
+    public ArrayList<String> getSubtaskList() {
+        ArrayList<String> subtaskList = new ArrayList<>();
+
+        for (Subtask subtask : subtaskMap.values()) {
+            subtaskList.add(subtask.toString());
+        }
+
+        return subtaskList;
+    }
+
+    @Override
+    public ArrayList<String> getEpicList() {
+        ArrayList<String> epicList = new ArrayList<>();
+
+        for (Epic epic : epicMap.values()) {
+            epicList.add(epic.toString());
+        }
+
+        return epicList;
     }
 
     @Override
@@ -56,60 +137,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         return foundedTask;
-    }
-
-    @Override
-    public void updateTask(Task task) {
-        if (task instanceof Subtask) {
-            subtaskMap.put(task.getId(), (Subtask) task);
-        } else if (task instanceof Epic) {
-            if (((Epic) task).getEpicSubtasks().isEmpty()) {
-                task.setStatus(Status.NEW);
-                return;
-            }
-
-            for (Subtask subtask : ((Epic) task).getEpicSubtasks()) {
-                if (subtask.getStatus().equals("NEW")) {
-                    task.setStatus(Status.NEW);
-                } else {
-                    task.setStatus(Status.IN_PROGRESS);
-                    break;
-                }
-            }
-
-
-            for (Subtask subtask : ((Epic) task).getEpicSubtasks()) {
-                if (subtask.getStatus().equals("DONE")) {
-                    task.setStatus(Status.DONE);
-                } else {
-                    task.setStatus(Status.IN_PROGRESS);
-                    break;
-                }
-            }
-
-            epicMap.put(task.getId(), (Epic) task);
-        } else {
-            taskMap.put(task.getId(), task);
-        }
-    }
-
-    @Override
-    public ArrayList<String> getTaskList() {
-        ArrayList<String> list = new ArrayList<>();
-
-        for (Task task : taskMap.values()) {
-            list.add(task.toString());
-        }
-
-        for (Subtask subtask : subtaskMap.values()) {
-            list.add(subtask.toString());
-        }
-
-        for (Epic epic : epicMap.values()) {
-            list.add(epic.toString());
-        }
-
-        return list;
     }
 
     public ArrayList<Task> getTasks() {

@@ -71,7 +71,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         for (String line : lines) {
             if (!line.isBlank() && !line.equals("\n")) {
                 Task task = manager.fromString(line);
-                manager.createNewTask(task);
+                if (task instanceof Subtask) {
+                    manager.createNewSubtask((Subtask) task);
+                } else if (task instanceof Epic) {
+                    manager.createNewEpic((Epic) task);
+                } else if (task != null) {
+                    manager.createNewTask(task);
+                }
             }
         }
 
@@ -180,8 +186,32 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
+    public void createNewSubtask(Subtask subtask) {
+        super.createNewSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void createNewEpic(Epic epic) {
+        super.createNewEpic(epic);
+        save();
+    }
+
+    @Override
     public void updateTask(Task task) {
         super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
         save();
     }
 
