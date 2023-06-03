@@ -2,17 +2,51 @@ package tasks;
 
 import managers.InMemoryTaskManager;
 
+import java.time.LocalDateTime;
+
 public class Task {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private Integer id;
     private Status status;
     private Type type = Type.TASK;
+    protected int duration = 0;
+    protected LocalDateTime startTime = null;
 
     public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(String name, String description, Status status, int duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime != null) {
+            return startTime.plusMinutes(duration);
+        } else return null;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
     public String getName() {

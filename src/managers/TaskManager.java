@@ -7,6 +7,7 @@ import tasks.Task;
 import java.util.ArrayList;
 
 public interface TaskManager {
+    void resetTaskIdCounter();
     void createNewTask(Task task);
 
     void createNewSubtask(Subtask subtask);
@@ -32,4 +33,6 @@ public interface TaskManager {
     Task getTaskById(Integer id);
 
     ArrayList<Subtask> getEpicSubtaskList(Integer epicId);
+
+    ArrayList<Task> getPrioritizedTasks();
 }

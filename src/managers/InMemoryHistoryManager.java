@@ -51,7 +51,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node.next == null) {
             Integer oldTail = node.current.getId();
             Node<Task> prev = tail.prev;
-            prev.next = null;
+            if (prev != null) {
+                prev.next = null;
+            }
             tail = prev;
             taskHistory.remove(oldTail);
         } else if (node.prev == null) {
