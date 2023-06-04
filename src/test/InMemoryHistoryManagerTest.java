@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryHistoryManagerTest {
-    InMemoryHistoryManager inMemoryHistoryManager;
-    Task task;
-    Task task2;
-    Task task3;
+    private InMemoryHistoryManager inMemoryHistoryManager;
+    private Task task;
+    private Task task2;
+    private Task task3;
 
     @BeforeEach
     public void beforeEach() {

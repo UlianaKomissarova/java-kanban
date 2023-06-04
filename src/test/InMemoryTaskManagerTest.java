@@ -16,21 +16,17 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
-    InMemoryTaskManager inMemoryTaskManager;
-    Task task;
-    Subtask subtaskWithNewStatus;
-    Subtask subtaskWithInProgressStatus;
-    Subtask subtaskWithDoneStatus;
-    ArrayList<Subtask> subtasks;
-    Epic epic;
-    Epic emptyEpic;
-    Epic epicWithOneSubtaskInProgress;
-    Epic epicWithNewAndDoneSubtasks;
-    Epic epicWithNewSubtask;
-    Epic epicWithDoneSubtasks;
-    Task taskWithStartTime1;
-    Task taskWithStartTime2;
-    Subtask taskWithStartTime3;
+    private InMemoryTaskManager inMemoryTaskManager;
+    private Task task;
+    private Subtask subtaskWithNewStatus;
+    private Epic epic;
+    private Epic emptyEpic;
+    private Epic epicWithNewAndDoneSubtasks;
+    private Epic epicWithNewSubtask;
+    private Epic epicWithDoneSubtasks;
+    private Task taskWithStartTime1;
+    private Task taskWithStartTime2;
+    private Subtask taskWithStartTime3;
 
     @BeforeEach
     public void beforeEach() {
@@ -48,7 +44,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
                 Status.NEW
         );
 
-        subtasks = new ArrayList<>();
+        ArrayList<Subtask> subtasks = new ArrayList<>();
         subtasks.add(subtaskWithNewStatus);
 
         epic = new Epic(
@@ -65,19 +61,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
                 new ArrayList<>()
         );
 
-        subtaskWithInProgressStatus = new Subtask("test-name", "test-description", Status.IN_PROGRESS);
-        ArrayList<Subtask> subtasksWithInProgressAndNew = new ArrayList<>();
-        subtasksWithInProgressAndNew.add(subtaskWithInProgressStatus);
-        subtasksWithInProgressAndNew.add(subtaskWithNewStatus);
-
-        epicWithOneSubtaskInProgress = new Epic(
-                "test-name",
-                "test-description",
-                Status.NEW,
-                subtasksWithInProgressAndNew
-        );
-
-        subtaskWithDoneStatus = new Subtask("test-name", "test-description", Status.DONE);
+        Subtask subtaskWithDoneStatus = new Subtask("test-name", "test-description", Status.DONE);
         ArrayList<Subtask> subtasksWithNewAndDone = new ArrayList<>();
         subtasksWithNewAndDone.add(subtaskWithNewStatus);
         subtasksWithNewAndDone.add(subtaskWithDoneStatus);
