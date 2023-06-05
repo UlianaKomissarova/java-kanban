@@ -88,21 +88,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 }
             }
         }
-//          TODO: я потеряла смысл в этом коде, вроде бы все работает без него
-//        HashMap<Integer, Task> taskMap = new HashMap<>();
-//        HashMap<Integer, Subtask> subtaskMap = new HashMap<>();
-//        HashMap<Integer, Epic> epicMap = new HashMap<>();
-//
-//        List<Task> taskList = manager.getTasks();
-//        for (Task task : taskList) {
-//            if (task instanceof Subtask) {
-//                subtaskMap.put(task.getId(), (Subtask) task);
-//            } else if (task instanceof Epic) {
-//                epicMap.put(task.getId(), (Epic) task);
-//            } else if (task != null) {
-//                taskMap.put(task.getId(), task);
-//            }
-//        }
 
         for (Integer id : historyFromString(history)) {
             manager.historyManager.add(manager.getTaskById(id));
@@ -144,7 +129,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public String toString(Task task) {
-        String taskInfo = null;
+        String taskInfo;
 
         if (task != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

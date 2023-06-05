@@ -17,8 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager> {
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         super.beforeEach();
+        taskManager = new FileBackedTasksManager(new File("src/test/resources/actual_tasks.csv"));
     }
 
     @Test
