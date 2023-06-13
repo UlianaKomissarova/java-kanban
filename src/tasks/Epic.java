@@ -5,19 +5,19 @@ import java.util.ArrayList;
 
 public class Epic extends Task {
     private LocalDateTime endTime;
-    private final ArrayList<Subtask> subtasks;
+    private ArrayList<Subtask> subtasks;
 
     public Epic(String name, String description, Status status, ArrayList<Subtask> subtasks) {
         super(name, description, status);
         super.setType(Type.EPIC);
-        this.subtasks = subtasks;
-        if (subtasks.isEmpty()) {
+        this.subtasks = (subtasks == null ? new ArrayList<>() : subtasks);
+        if (this.subtasks.isEmpty()) {
             return;
         }
 
-        endTime = subtasks.get(0).getEndTime();
-        startTime = subtasks.get(0).getStartTime();
-        for (Subtask subtask : subtasks) {
+        endTime = this.subtasks.get(0).getEndTime();
+        startTime = this.subtasks.get(0).getStartTime();
+        for (Subtask subtask : this.subtasks) {
             subtask.setEpic(this);
 
             if (subtask.getStartTime() == null || subtask.getEndTime() == null) {
@@ -45,6 +45,10 @@ public class Epic extends Task {
         return subtasks;
     }
 
+    public void setSubtasks(ArrayList<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
     @Override
     public String toString() {
         return "tasks.Epic{" +
@@ -52,7 +56,10 @@ public class Epic extends Task {
                 ", description='" + super.getDescription() + '\'' +
                 ", id='" + super.getId() + '\'' +
                 ", status='" + super.getStatus() + '\'' +
-                "epicSubtasks=" + subtasks +
+                "epicSubtasks=" + subtasks + '\'' +
+                ", type='" + Type.EPIC + '\'' +
+                ", duration='" + duration + '\'' +
+                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
                 '}';
     }
 }

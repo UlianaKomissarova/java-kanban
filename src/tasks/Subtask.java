@@ -30,7 +30,10 @@ public class Subtask extends Task {
                 ", description='" + super.getDescription() + '\'' +
                 ", id='" + super.getId() + '\'' +
                 ", status='" + super.getStatus() + '\'' +
-                ", epicName='" + epic.getName() + "'" +
+                ", epicName='" + epic.getName() + '\'' +
+                ", type='" + Type.SUBTASK + '\'' +
+                ", duration='" + duration + '\'' +
+                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
                 '}';
     }
 }

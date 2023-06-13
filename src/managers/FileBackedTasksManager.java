@@ -1,6 +1,7 @@
 package managers;
 
 import exceptions.ManagerSaveException;
+import server.KVServer;
 import tasks.*;
 
 import java.io.File;
@@ -9,37 +10,19 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    public final InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    public HistoryManager historyManager = new InMemoryHistoryManager();
     private static final String FORMAT = "id,type,name,status,description,duration,startTime,epic\n";
     private final File file;
 
     public FileBackedTasksManager(File file) {
         super();
         this.file = file;
-    }
-
-    public static void main(String[] args) {
-        FileBackedTasksManager fileManager;
-        try {
-            fileManager = loadFromFile(new File("resources/task.csv"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        fileManager.historyManager.add(fileManager.getTaskById(1));
-        fileManager.historyManager.add(fileManager.getTaskById(6));
-        fileManager.historyManager.add(fileManager.getTaskById(2));
-        fileManager.save();
-
-        System.out.println("Проверим список:");
-        for (Task task : fileManager.historyManager.getHistory()) {
-            System.out.println(task);
-        }
     }
 
     public void save() {
@@ -243,8 +226,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    private void linkSubtaskWithEpic(Subtask subtask, Integer epicId) {
+    public void linkSubtaskWithEpic(Subtask subtask, Integer epicId) throws InvalidParameterException {
         Epic epic = this.epicMap.get(epicId);
+        if (epic == null) {
+            throw new InvalidParameterException("Задан неверный epicId");
+        }
+
         subtask.setEpic(epic);
         epic.getEpicSubtasks().add(subtask);
     }

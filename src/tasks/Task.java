@@ -87,7 +87,10 @@ public class Task {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id='" + InMemoryTaskManager.taskId + '\'' +
-                ", status='" + status + "'" +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", duration='" + duration + '\'' +
+                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
                 '}';
     }
 }
