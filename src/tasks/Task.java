@@ -86,7 +86,7 @@ public class Task {
         return "tasks.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", id='" + InMemoryTaskManager.taskId + '\'' +
+                ", id='" + id + '\'' +
                 ", status='" + status + '\'' +
                 ", type='" + type + '\'' +
                 ", duration='" + duration + '\'' +

@@ -128,7 +128,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                             subtask.getDescription(),
                             subtask.getDuration(),
                             subtask.getStartTime().format(formatter),
-                            subtask.getEpic().getId()
+                            subtask.getEpicId()
                     );
                 } else {
                     taskInfo = String.format(
@@ -140,7 +140,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                             subtask.getDescription(),
                             0,
                             null,
-                            subtask.getEpic().getId()
+                            subtask.getEpicId()
                     );
                 }
             } else  {
@@ -232,7 +232,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             throw new InvalidParameterException("Задан неверный epicId");
         }
 
-        subtask.setEpic(epic);
+        subtask.setEpicId(epic.getId());
         epic.getEpicSubtasks().add(subtask);
     }
 

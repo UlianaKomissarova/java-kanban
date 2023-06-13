@@ -3,7 +3,7 @@ package tasks;
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
-    private Epic epic;
+    private Integer epicId;
 
     public Subtask(String name, String description, Status status) {
         super(name, description, status);
@@ -15,12 +15,12 @@ public class Subtask extends Task {
         super.setType(Type.SUBTASK);
     }
 
-    public Epic getEpic() {
-        return epic;
+    public Integer getEpicId() {
+        return epicId;
     }
 
-    public void setEpic(Epic epic) {
-        this.epic = epic;
+    public void setEpicId(int epicId) {
+        this.epicId = epicId;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Subtask extends Task {
                 ", description='" + super.getDescription() + '\'' +
                 ", id='" + super.getId() + '\'' +
                 ", status='" + super.getStatus() + '\'' +
-                ", epicName='" + epic.getName() + '\'' +
+                ", epicId='" + epicId + '\'' +
                 ", type='" + Type.SUBTASK + '\'' +
                 ", duration='" + duration + '\'' +
                 ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +

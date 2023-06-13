@@ -18,7 +18,8 @@ public class Epic extends Task {
         endTime = this.subtasks.get(0).getEndTime();
         startTime = this.subtasks.get(0).getStartTime();
         for (Subtask subtask : this.subtasks) {
-            subtask.setEpic(this);
+            // TODO: в этот момент еще нет id, нужно переделать
+            subtask.setEpicId(this.getId());
 
             if (subtask.getStartTime() == null || subtask.getEndTime() == null) {
                 continue;

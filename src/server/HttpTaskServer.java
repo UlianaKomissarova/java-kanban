@@ -359,7 +359,7 @@ public class HttpTaskServer {
                 return;
             }
 
-            if (((Subtask) newTask).getEpic() == null) {
+            if (((Subtask) newTask).getEpicId() == null) {
                 sendBadRequest(httpExchange, "Необходимо указать epicId");
                 return;
             }
