@@ -1,7 +1,6 @@
 package managers;
 
 import exceptions.ManagerSaveException;
-import server.KVServer;
 import tasks.*;
 
 import java.io.File;
@@ -216,6 +215,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 return task;
             case "EPIC":
                 return new Epic(
+                        Integer.parseInt(split[0]),
                         split[2],
                         split[4],
                         Status.valueOf(split[3]),
@@ -275,6 +275,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     @Override
     public void removeAllTasks() {
         super.removeAllTasks();
+        save();
+    }
+
+    @Override
+    public void removeEpics() {
+        super.removeEpics();
+        save();
+    }
+
+    @Override
+    public void removeSubtasks() {
+        super.removeSubtasks();
+        save();
+    }
+
+    @Override
+    public void removeTasks() {
+        super.removeTasks();
         save();
     }
 

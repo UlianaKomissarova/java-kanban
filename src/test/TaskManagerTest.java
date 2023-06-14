@@ -38,6 +38,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         subtasks.add(subtaskWithNewStatus);
 
         epic = new Epic(
+                17,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -96,6 +97,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void getEpicSubtaskListIfEmptyList() {
         Epic emptyEpic = new Epic(
+                18,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -138,6 +140,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         ArrayList<Subtask> epicListWithSubtask3 = new ArrayList<>();
         epicListWithSubtask3.add(taskWithStartTime3);
         Epic epicWithSubtask3 = new Epic(
+                20,
                 "test-name",
                 "test-description",
                 Status.NEW,

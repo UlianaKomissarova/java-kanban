@@ -36,7 +36,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtask != null) {
             subtask.setId(++taskId);
             subtaskMap.put(subtask.getId(), subtask);
-            taskTreeSet.add(subtask);
+            boolean result = taskTreeSet.add(subtask);
+            int a = 1;
         }
     }
 
@@ -126,6 +127,21 @@ public class InMemoryTaskManager implements TaskManager {
         subtaskMap.clear();
         epicMap.clear();
         taskTreeSet.clear();
+    }
+
+    public void removeEpics() {
+        epicMap.clear();
+        taskTreeSet.removeIf(task -> task instanceof Epic);
+    }
+
+    public void removeSubtasks() {
+        subtaskMap.clear();
+        taskTreeSet.removeIf(task -> task instanceof Subtask);
+    }
+
+    public void removeTasks() {
+        taskMap.clear();
+        taskTreeSet.removeIf(task -> !(task instanceof Epic) && !(task instanceof Subtask));
     }
 
     @Override

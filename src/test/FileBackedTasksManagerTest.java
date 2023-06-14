@@ -74,6 +74,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         subtaskForEpic4.add(subtask7);
 
         Epic epic3 = new Epic(
+                3,
                 "Переезд",
                 "Едем жить на море",
                 Status.NEW,
@@ -81,6 +82,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         );
 
         Epic epic4 = new Epic(
+                4,
                 "Найти работу",
                 "Нужно получать денежки чтобы тратить",
                 Status.NEW,
@@ -121,6 +123,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     @Test
     void saveEpicWithoutSubtasksAndEmptyHistory() throws IOException {
         Epic epic = new Epic(
+                3,
                 "Переезд",
                 "Едем жить на море",
                 Status.NEW,

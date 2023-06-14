@@ -1,10 +1,6 @@
 id,type,name,status,description,duration,startTime,epic
-1,TASK,Погулять,NEW,Идем гулять в парк!,20,2001-10-10 10:10,
-2,TASK,Поиграть с кошкой,NEW,Достань игрушки!,
-3,EPIC,Переезд,NEW,Едем жить на море,
-4,EPIC,Найти работу,NEW,Нужно получать денежки чтобы тратить,
-5,SUBTASK,Собрать вещи,NEW,Возьми все самое нужное с собой,10,2001-10-10 10:10,3,
-6,SUBTASK,Найди жилье,NEW,Поищи объявления об аренде,20,2001-11-11 11:11,3,
-7,SUBTASK,Сходить на собеседование,NEW,Подготовиться к собеседованию заранее,15,2001-10-13 13:13,4,
+1,TASK,test-name,NEW,test-description,
+2,TASK,test-name,NEW,test-description,30,2021-11-10 10:10,
+3,TASK,test-name,NEW,test-description,30,2020-11-10 10:10,
+4,SUBTASK,test-name,NEW,test-description,30,2019-11-10 10:10,20,
 
-1,6,2

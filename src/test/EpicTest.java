@@ -34,6 +34,7 @@ class EpicTest {
         subtasksWithTime.add(subtaskWithTime2);
 
         Epic epicWithTime = new Epic(
+                1,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -57,6 +58,7 @@ class EpicTest {
         subtasksWithNullTime.add(subtaskWithNullTime);
 
         Epic epicWithNullTimeSubtask = new Epic(
+                2,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -89,6 +91,7 @@ class EpicTest {
         subtasksWithTime.add(subtaskWithTime2);
 
         Epic epicWithTime = new Epic(
+                3,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -112,6 +115,7 @@ class EpicTest {
         subtasksWithNullTime.add(subtaskWithNullTime);
 
         Epic epicWithNullTimeSubtask = new Epic(
+                4,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -144,6 +148,7 @@ class EpicTest {
         subtasksWithTime.add(subtaskWithTime2);
 
         Epic epicWithTime = new Epic(
+                5,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -178,6 +183,7 @@ class EpicTest {
         subtasksWithTime.add(subtaskWithTime2);
 
         Epic epicWithTime = new Epic(
+                6,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -191,6 +197,7 @@ class EpicTest {
     @Test
     void getEpicSubtasksIfNull() {
         Epic emptyEpic = new Epic(
+                7,
                 "test-name",
                 "test-description",
                 Status.NEW,

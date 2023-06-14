@@ -7,9 +7,10 @@ public class Epic extends Task {
     private LocalDateTime endTime;
     private ArrayList<Subtask> subtasks;
 
-    public Epic(String name, String description, Status status, ArrayList<Subtask> subtasks) {
+    public Epic(Integer id, String name, String description, Status status, ArrayList<Subtask> subtasks) {
         super(name, description, status);
         super.setType(Type.EPIC);
+        super.setId(id);
         this.subtasks = (subtasks == null ? new ArrayList<>() : subtasks);
         if (this.subtasks.isEmpty()) {
             return;
@@ -18,7 +19,6 @@ public class Epic extends Task {
         endTime = this.subtasks.get(0).getEndTime();
         startTime = this.subtasks.get(0).getStartTime();
         for (Subtask subtask : this.subtasks) {
-            // TODO: в этот момент еще нет id, нужно переделать
             subtask.setEpicId(this.getId());
 
             if (subtask.getStartTime() == null || subtask.getEndTime() == null) {

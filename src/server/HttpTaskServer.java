@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import managers.HttpTaskManager;
 import managers.Managers;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import managers.TaskManager;
 import tasks.*;
 import managers.FileBackedTasksManager;
 
@@ -51,20 +49,10 @@ public class HttpTaskServer {
             String query = httpExchange.getRequestURI().getQuery();
             String requestMethod = httpExchange.getRequestMethod();
             if (requestMethod.equals("GET")) {
-                if (query == null) {
-                    ArrayList<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
-                    if (prioritizedTasks != null) {
-                        httpExchange.sendResponseHeaders(201, 0);
-                        String response = gson.toJson(prioritizedTasks);
-                        try (OutputStream os = httpExchange.getResponseBody()) {
-                            os.write(response.getBytes(StandardCharsets.UTF_8));
-                        }
-                    } else {
-                        httpExchange.sendResponseHeaders(400, 0);
-                    }
-                } else {
-                    httpExchange.sendResponseHeaders(400, 0);
-                }
+                getAndSendPrioritizedTasks(httpExchange, query);
+            } else if (requestMethod.equals("DELETE")) {
+                taskManager.removeAllTasks();
+                httpExchange.sendResponseHeaders(201, 0);
             } else {
                 System.out.println("Ожидается GET запрос, получен некорректный запрос " + requestMethod);
                 httpExchange.sendResponseHeaders(405, 0);
@@ -73,6 +61,23 @@ public class HttpTaskServer {
             e.printStackTrace();
         } finally {
             httpExchange.close();
+        }
+    }
+
+    private void getAndSendPrioritizedTasks(HttpExchange httpExchange, String query) throws IOException {
+        if (query == null) {
+            ArrayList<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+            if (prioritizedTasks != null) {
+                httpExchange.sendResponseHeaders(201, 0);
+                String response = gson.toJson(prioritizedTasks);
+                try (OutputStream os = httpExchange.getResponseBody()) {
+                    os.write(response.getBytes(StandardCharsets.UTF_8));
+                }
+            } else {
+                httpExchange.sendResponseHeaders(400, 0);
+            }
+        } else {
+            httpExchange.sendResponseHeaders(400, 0);
         }
     }
 
@@ -81,20 +86,7 @@ public class HttpTaskServer {
             String query = httpExchange.getRequestURI().getQuery();
             String requestMethod = httpExchange.getRequestMethod();
             if (requestMethod.equals("GET")) {
-                if (query == null) {
-                    List<Task> history = taskManager.historyManager.getHistory();
-                    if (history != null) {
-                        httpExchange.sendResponseHeaders(201, 0);
-                        String response = gson.toJson(history);
-                        try (OutputStream os = httpExchange.getResponseBody()) {
-                            os.write(response.getBytes(StandardCharsets.UTF_8));
-                        }
-                    } else {
-                        httpExchange.sendResponseHeaders(400, 0);
-                    }
-                } else {
-                    httpExchange.sendResponseHeaders(400, 0);
-                }
+                getAndSendHistory(httpExchange, query);
             } else {
                 System.out.println("Ожидается GET запрос, получен некорректный запрос " + requestMethod);
                 httpExchange.sendResponseHeaders(405, 0);
@@ -106,31 +98,29 @@ public class HttpTaskServer {
         }
     }
 
+    private void getAndSendHistory(HttpExchange httpExchange, String query) throws IOException {
+        if (query == null) {
+            List<Task> history = taskManager.historyManager.getHistory();
+            if (history != null) {
+                httpExchange.sendResponseHeaders(201, 0);
+                String response = gson.toJson(history);
+                try (OutputStream os = httpExchange.getResponseBody()) {
+                    os.write(response.getBytes(StandardCharsets.UTF_8));
+                }
+            } else {
+                httpExchange.sendResponseHeaders(400, 0);
+            }
+        } else {
+            httpExchange.sendResponseHeaders(400, 0);
+        }
+    }
+
     private void handleSubtaskByEpicId(HttpExchange httpExchange) {
         try {
             String query = httpExchange.getRequestURI().getQuery();
             String requestMethod = httpExchange.getRequestMethod();
             if (requestMethod.equals("GET")) {
-                if (query == null) {
-                    httpExchange.sendResponseHeaders(400, 0);
-                } else {
-                    if (query.startsWith("id=")) {
-                        String[] split = query.split("&")[0].split("=");
-                        Integer epicId = Integer.parseInt(split[1]);
-                        List<Subtask> subtasks = taskManager.getEpicSubtaskList(epicId);
-                        if (subtasks != null) {
-                            httpExchange.sendResponseHeaders(200, 0);
-                            String response = gson.toJson(subtasks);
-                            try (OutputStream os = httpExchange.getResponseBody()) {
-                                os.write(response.getBytes(StandardCharsets.UTF_8));
-                            }
-                        } else {
-                            httpExchange.sendResponseHeaders(404, 0);
-                        }
-                    } else {
-                        httpExchange.sendResponseHeaders(400, 0);
-                    }
-                }
+                getAndSendSubtaskById(httpExchange, query);
             } else {
                 System.out.println("Ожидается GET запрос, получен некорректный запрос " + requestMethod);
                 httpExchange.sendResponseHeaders(405, 0);
@@ -139,6 +129,29 @@ public class HttpTaskServer {
             e.printStackTrace();
         } finally {
             httpExchange.close();
+        }
+    }
+
+    private void getAndSendSubtaskById(HttpExchange httpExchange, String query) throws IOException {
+        if (query == null) {
+            httpExchange.sendResponseHeaders(400, 0);
+        } else {
+            if (query.startsWith("id=")) {
+                String[] split = query.split("&")[0].split("=");
+                Integer epicId = Integer.parseInt(split[1]);
+                List<Subtask> subtasks = taskManager.getEpicSubtaskList(epicId);
+                if (subtasks != null) {
+                    httpExchange.sendResponseHeaders(200, 0);
+                    String response = gson.toJson(subtasks);
+                    try (OutputStream os = httpExchange.getResponseBody()) {
+                        os.write(response.getBytes(StandardCharsets.UTF_8));
+                    }
+                } else {
+                    httpExchange.sendResponseHeaders(404, 0);
+                }
+            } else {
+                httpExchange.sendResponseHeaders(400, 0);
+            }
         }
     }
 
@@ -228,15 +241,15 @@ public class HttpTaskServer {
 
     private void deleteAllTasksOrTaskById(HttpExchange httpExchange, String query) throws IOException {
         if (query == null) {
-            taskManager.removeAllTasks();
-            httpExchange.sendResponseHeaders(201, 0);
+            deleteTasks(httpExchange);
+            httpExchange.sendResponseHeaders(200, 0);
         } else {
             if (query.startsWith("id=")) {
                 String[] split = query.split("&")[0].split("=");
                 Integer taskId = Integer.parseInt(split[1]);
                 if (taskId != -1) {
-                    taskManager.removeTaskById(taskId);
                     System.out.println("Удалена задача " + taskManager.getTaskById(taskId).getName());
+                    taskManager.removeTaskById(taskId);
                     httpExchange.sendResponseHeaders(200, 0);
                 } else {
                     System.out.println("Получен некорректный id");
@@ -248,11 +261,23 @@ public class HttpTaskServer {
         }
     }
 
+    private void deleteTasks(HttpExchange httpExchange) {
+        String path = httpExchange.getRequestURI().getPath();
+        if (path.equals("/tasks/subtask")) {
+            taskManager.removeSubtasks();
+        } else if (path.equals("/tasks/epic")) {
+            taskManager.removeEpics();
+        } else {
+            taskManager.removeTasks();
+        }
+    }
+
     private void updateTask(HttpExchange httpExchange, Task task) throws IOException {
         if (task instanceof Subtask) {
             taskManager.updateSubtask((Subtask) task);
             System.out.println("Обновлена подзадача " + task.getName());
         } else if (task instanceof Epic) {
+            ((Epic) task).setSubtasks(taskManager.getEpicSubtaskList(task.getId()));
             taskManager.updateEpic((Epic) task);
             System.out.println("Обновлен эпик " + task.getName());
         } else {
@@ -300,7 +325,7 @@ public class HttpTaskServer {
             getAllTasks(httpExchange, type);
         } else {
             if (query.startsWith("id=")) {
-                getTaskById(httpExchange, query);
+                getTaskById(httpExchange, query, type);
             } else {
                 httpExchange.sendResponseHeaders(400, 0);
             }
@@ -328,11 +353,14 @@ public class HttpTaskServer {
         }
     }
 
-    private void getTaskById(HttpExchange httpExchange, String query) throws IOException {
+    private void getTaskById(HttpExchange httpExchange, String query, Type type) throws IOException {
         String[] split = query.split("&")[0].split("=");
         Integer taskId = Integer.parseInt(split[1]);
         Task task = taskManager.getTaskById(taskId);
-        if (task != null) {
+
+        if (task != null && task.getType().equals(type)) {
+            taskManager.historyManager.add(task);
+
             httpExchange.sendResponseHeaders(200, 0);
             String response = gson.toJson(task);
             try (OutputStream os = httpExchange.getResponseBody()) {

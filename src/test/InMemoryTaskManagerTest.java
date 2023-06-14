@@ -27,6 +27,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         subtasksWithNewAndDone.add(subtaskWithNewStatus);
         subtasksWithNewAndDone.add(subtaskWithDoneStatus);
         epicWithNewAndDoneSubtasks = new Epic(
+                11,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -36,6 +37,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         ArrayList<Subtask> subtasksNew = new ArrayList<>();
         subtasksNew.add(subtaskWithNewStatus);
         epicWithNewSubtask = new Epic(
+                12,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -45,6 +47,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         ArrayList<Subtask> subtasksDone = new ArrayList<>();
         subtasksDone.add(subtaskWithDoneStatus);
         epicWithDoneSubtasks = new Epic(
+                13,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -220,6 +223,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     @Test
     void updateEpicIfEmptySubtasksList() {
         Epic emptyEpic = new Epic(
+                14,
                 "test-name",
                 "test-description",
                 Status.NEW,
@@ -255,7 +259,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     void removeAllTasks() {
         taskManager.createNewTask(new Task("testName", "testD", Status.NEW));
         taskManager.createNewSubtask(new Subtask("testSub", "testD", Status.NEW));
-        taskManager.createNewEpic(new Epic("testEpic", "testD", Status.NEW, new ArrayList<>()));
+        taskManager.createNewEpic(new Epic(15,"testEpic", "testD", Status.NEW, new ArrayList<>()));
 
         taskManager.removeAllTasks();
         assertEquals(new ArrayList<>(), taskManager.getEpicList(), "Лист задач не очистился.");
