@@ -36,7 +36,7 @@ public class Epic extends Task {
             duration += subtask.getDuration();
         }
     }
-    
+
     @Override
     public LocalDateTime getEndTime() {
         return endTime;
@@ -53,14 +53,14 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "tasks.Epic{" +
-                "name='" + super.getName() + '\'' +
-                ", description='" + super.getDescription() + '\'' +
-                ", id='" + super.getId() + '\'' +
-                ", status='" + super.getStatus() + '\'' +
-                "epicSubtasks=" + subtasks + '\'' +
-                ", type='" + Type.EPIC + '\'' +
-                ", duration='" + duration + '\'' +
-                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
-                '}';
+            "name='" + super.getName() + '\'' +
+            ", description='" + super.getDescription() + '\'' +
+            ", id='" + super.getId() + '\'' +
+            ", status='" + super.getStatus() + '\'' +
+            "epicSubtasks=" + subtasks + '\'' +
+            ", type='" + Type.EPIC + '\'' +
+            ", duration='" + duration + '\'' +
+            ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
+            '}';
     }
 }

@@ -23,23 +23,23 @@ class InMemoryHistoryManagerTest {
         inMemoryHistoryManager = new InMemoryHistoryManager();
 
         task = new Task(
-                "Погулять",
-                "Идем гулять в парк!",
-                Status.NEW
+            "Погулять",
+            "Идем гулять в парк!",
+            Status.NEW
         );
         task.setId(1);
 
         task2 = new Task(
-                "Погулять",
-                "Идем гулять в парк!",
-                Status.NEW
+            "Погулять",
+            "Идем гулять в парк!",
+            Status.NEW
         );
         task2.setId(2);
 
         task3 = new Task(
-                "Погулять",
-                "Идем гулять в парк!",
-                Status.NEW
+            "Погулять",
+            "Идем гулять в парк!",
+            Status.NEW
         );
         task3.setId(3);
     }

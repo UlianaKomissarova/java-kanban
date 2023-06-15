@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public interface TaskManager {
     void resetTaskIdCounter();
+
     void createNewTask(Task task);
 
     void createNewSubtask(Subtask subtask);

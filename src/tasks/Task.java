@@ -4,7 +4,7 @@ import managers.InMemoryTaskManager;
 
 import java.time.LocalDateTime;
 
-public class Task {
+public class Task implements Comparable<Task> {
     private final String name;
     private final String description;
     private Integer id;
@@ -84,13 +84,18 @@ public class Task {
     @Override
     public String toString() {
         return "tasks.Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id='" + id + '\'' +
-                ", status='" + status + '\'' +
-                ", type='" + type + '\'' +
-                ", duration='" + duration + '\'' +
-                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
-                '}';
+            "name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", id='" + id + '\'' +
+            ", status='" + status + '\'' +
+            ", type='" + type + '\'' +
+            ", duration='" + duration + '\'' +
+            ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
+            '}';
+    }
+
+    @Override
+    public int compareTo(Task o) {
+        return 0;
     }
 }

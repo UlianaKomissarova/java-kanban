@@ -25,37 +25,37 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     @Test
     void save() throws IOException {
         FileBackedTasksManager actualFileBackedTasksManager = new FileBackedTasksManager(
-                new File("src/test/resources/actual_tasks.csv")
+            new File("src/test/resources/actual_tasks.csv")
         );
-        
+
         Task task1 = new Task(
-                "Погулять",
-                "Идем гулять в парк!",
-                Status.NEW,
-                20,
-                LocalDateTime.of(2001, 10, 10, 10, 10)
+            "Погулять",
+            "Идем гулять в парк!",
+            Status.NEW,
+            20,
+            LocalDateTime.of(2001, 10, 10, 10, 10)
         );
 
         Task task2 = new Task(
-                "Поиграть с кошкой",
-                "Достань игрушки!",
-                Status.NEW
+            "Поиграть с кошкой",
+            "Достань игрушки!",
+            Status.NEW
         );
 
         Subtask subtask5 = new Subtask(
-                "Собрать вещи",
-                "Возьми все самое нужное с собой",
-                Status.NEW,
-                10,
-                LocalDateTime.of(2001, 10, 10, 10, 10)
+            "Собрать вещи",
+            "Возьми все самое нужное с собой",
+            Status.NEW,
+            10,
+            LocalDateTime.of(2001, 10, 10, 10, 10)
         );
 
         Subtask subtask6 = new Subtask(
-                "Найди жилье",
-                "Поищи объявления об аренде",
-                Status.NEW,
-                20,
-                LocalDateTime.of(2001, 11, 11, 11, 11)
+            "Найди жилье",
+            "Поищи объявления об аренде",
+            Status.NEW,
+            20,
+            LocalDateTime.of(2001, 11, 11, 11, 11)
         );
 
         ArrayList<Subtask> subtasksForEpic3 = new ArrayList<>();
@@ -63,30 +63,30 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         subtasksForEpic3.add(subtask6);
 
         Subtask subtask7 = new Subtask(
-                "Сходить на собеседование",
-                "Подготовиться к собеседованию заранее",
-                Status.NEW,
-                15,
-                LocalDateTime.of(2001, 10, 13, 13, 13)
+            "Сходить на собеседование",
+            "Подготовиться к собеседованию заранее",
+            Status.NEW,
+            15,
+            LocalDateTime.of(2001, 10, 13, 13, 13)
         );
 
         ArrayList<Subtask> subtaskForEpic4 = new ArrayList<>();
         subtaskForEpic4.add(subtask7);
 
         Epic epic3 = new Epic(
-                3,
-                "Переезд",
-                "Едем жить на море",
-                Status.NEW,
-                subtasksForEpic3
+            3,
+            "Переезд",
+            "Едем жить на море",
+            Status.NEW,
+            subtasksForEpic3
         );
 
         Epic epic4 = new Epic(
-                4,
-                "Найти работу",
-                "Нужно получать денежки чтобы тратить",
-                Status.NEW,
-                subtaskForEpic4
+            4,
+            "Найти работу",
+            "Нужно получать денежки чтобы тратить",
+            Status.NEW,
+            subtaskForEpic4
         );
 
         actualFileBackedTasksManager.createNewTask(task1);
@@ -102,52 +102,52 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         actualFileBackedTasksManager.save();
 
         compareTwoFiles(
-                "src/test/resources/expected_tasks.csv",
-                "src/test/resources/actual_tasks.csv"
+            "src/test/resources/expected_tasks.csv",
+            "src/test/resources/actual_tasks.csv"
         );
     }
 
     @Test
     void saveEmptyTasksAndHistory() throws IOException {
         FileBackedTasksManager actualFileBackedTasksManager = new FileBackedTasksManager(
-                new File("src/test/resources/actual_empty_tasks.csv")
+            new File("src/test/resources/actual_empty_tasks.csv")
         );
         actualFileBackedTasksManager.save();
 
         compareTwoFiles(
-                "src/test/resources/expected_empty_tasks.csv",
-                "src/test/resources/actual_empty_tasks.csv"
+            "src/test/resources/expected_empty_tasks.csv",
+            "src/test/resources/actual_empty_tasks.csv"
         );
     }
 
     @Test
     void saveEpicWithoutSubtasksAndEmptyHistory() throws IOException {
         Epic epic = new Epic(
-                3,
-                "Переезд",
-                "Едем жить на море",
-                Status.NEW,
-                new ArrayList<>()
+            3,
+            "Переезд",
+            "Едем жить на море",
+            Status.NEW,
+            new ArrayList<>()
         );
 
         FileBackedTasksManager actualFileBackedTasksManager = new FileBackedTasksManager(
-                new File("src/test/resources/actual_epic_without_subtasks.csv")
+            new File("src/test/resources/actual_epic_without_subtasks.csv")
         );
         actualFileBackedTasksManager.createNewEpic(epic);
         actualFileBackedTasksManager.save();
         compareTwoFiles(
-                "src/test/resources/expected_epic_without_subtasks.csv",
-                "src/test/resources/actual_epic_without_subtasks.csv"
+            "src/test/resources/expected_epic_without_subtasks.csv",
+            "src/test/resources/actual_epic_without_subtasks.csv"
         );
     }
 
     private void compareTwoFiles(String expectedFilePath, String actualFilePath) throws IOException {
         FileBackedTasksManager expectedFileBackedTasksManager = FileBackedTasksManager.loadFromFile(
-                new File(expectedFilePath)
+            new File(expectedFilePath)
         );
 
         FileBackedTasksManager actualFileBackedTasksManager = FileBackedTasksManager.loadFromFile(
-                new File(actualFilePath)
+            new File(actualFilePath)
         );
 
         int i = 0;

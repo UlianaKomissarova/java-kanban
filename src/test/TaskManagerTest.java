@@ -24,25 +24,25 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @BeforeEach
     void beforeEach() {
         task = new Task(
-                "test-name",
-                "test-description",
-                Status.NEW
+            "test-name",
+            "test-description",
+            Status.NEW
         );
 
         subtaskWithNewStatus = new Subtask(
-                "test-name",
-                "test-description",
-                Status.NEW
+            "test-name",
+            "test-description",
+            Status.NEW
         );
         ArrayList<Subtask> subtasks = new ArrayList<>();
         subtasks.add(subtaskWithNewStatus);
 
         epic = new Epic(
-                17,
-                "test-name",
-                "test-description",
-                Status.NEW,
-                subtasks
+            17,
+            "test-name",
+            "test-description",
+            Status.NEW,
+            subtasks
         );
     }
 
@@ -88,63 +88,63 @@ abstract class TaskManagerTest<T extends TaskManager> {
     void getEpicSubtaskList() {
         taskManager.createNewEpic(epic);
         assertEquals(
-                epic.getEpicSubtasks(),
-                taskManager.getEpicSubtaskList(epic.getId()),
-                "Сабтаски не совпадают."
+            epic.getEpicSubtasks(),
+            taskManager.getEpicSubtaskList(epic.getId()),
+            "Сабтаски не совпадают."
         );
     }
 
     @Test
     void getEpicSubtaskListIfEmptyList() {
         Epic emptyEpic = new Epic(
-                18,
-                "test-name",
-                "test-description",
-                Status.NEW,
-                new ArrayList<>()
+            18,
+            "test-name",
+            "test-description",
+            Status.NEW,
+            new ArrayList<>()
         );
 
         taskManager.createNewEpic(emptyEpic);
         assertEquals(
-                new ArrayList<Task>(),
-                taskManager.getEpicSubtaskList(emptyEpic.getId()),
-                "Лист подзадач не пустой."
+            new ArrayList<Task>(),
+            taskManager.getEpicSubtaskList(emptyEpic.getId()),
+            "Лист подзадач не пустой."
         );
     }
 
     @Test
     void getPrioritizedTasks() {
         Task taskWithStartTime1 = new Task(
-                "test-name",
-                "test-description",
-                Status.NEW,
-                30,
-                LocalDateTime.of(2021, Month.NOVEMBER, 10, 10, 10)
+            "test-name",
+            "test-description",
+            Status.NEW,
+            30,
+            LocalDateTime.of(2021, Month.NOVEMBER, 10, 10, 10)
         );
 
         Task taskWithStartTime2 = new Task(
-                "test-name",
-                "test-description",
-                Status.NEW,
-                30,
-                LocalDateTime.of(2020, Month.NOVEMBER, 10, 10, 10)
+            "test-name",
+            "test-description",
+            Status.NEW,
+            30,
+            LocalDateTime.of(2020, Month.NOVEMBER, 10, 10, 10)
         );
 
         Subtask taskWithStartTime3 = new Subtask(
-                "test-name",
-                "test-description",
-                Status.NEW,
-                30,
-                LocalDateTime.of(2019, Month.NOVEMBER, 10, 10, 10)
+            "test-name",
+            "test-description",
+            Status.NEW,
+            30,
+            LocalDateTime.of(2019, Month.NOVEMBER, 10, 10, 10)
         );
         ArrayList<Subtask> epicListWithSubtask3 = new ArrayList<>();
         epicListWithSubtask3.add(taskWithStartTime3);
         Epic epicWithSubtask3 = new Epic(
-                20,
-                "test-name",
-                "test-description",
-                Status.NEW,
-                epicListWithSubtask3
+            20,
+            "test-name",
+            "test-description",
+            Status.NEW,
+            epicListWithSubtask3
         );
 
         taskManager.createNewTask(task);

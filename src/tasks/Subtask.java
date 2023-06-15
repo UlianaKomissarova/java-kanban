@@ -26,14 +26,14 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         return "tasks.Subtask{" +
-                "name='" + super.getName() + '\'' +
-                ", description='" + super.getDescription() + '\'' +
-                ", id='" + super.getId() + '\'' +
-                ", status='" + super.getStatus() + '\'' +
-                ", epicId='" + epicId + '\'' +
-                ", type='" + Type.SUBTASK + '\'' +
-                ", duration='" + duration + '\'' +
-                ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
-                '}';
+            "name='" + super.getName() + '\'' +
+            ", description='" + super.getDescription() + '\'' +
+            ", id='" + super.getId() + '\'' +
+            ", status='" + super.getStatus() + '\'' +
+            ", epicId='" + epicId + '\'' +
+            ", type='" + Type.SUBTASK + '\'' +
+            ", duration='" + duration + '\'' +
+            ", startTime='" + (null != startTime ? startTime.toString() : "") + '\'' +
+            '}';
     }
 }

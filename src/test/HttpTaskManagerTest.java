@@ -23,9 +23,9 @@ public class HttpTaskManagerTest {
 
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
-        httpTaskManager = (HttpTaskManager) Managers.getDefault();
         kvServer = new KVServer();
         kvServer.start();
+        httpTaskManager = (HttpTaskManager) Managers.getDefault();
     }
 
     @AfterEach
@@ -36,33 +36,33 @@ public class HttpTaskManagerTest {
     @Test
     void save() throws IOException, InterruptedException {
         Task task1 = new Task(
-                "Погулять",
-                "Идем гулять в парк!",
-                Status.NEW,
-                20,
-                LocalDateTime.of(2001, 10, 10, 10, 10)
+            "Погулять",
+            "Идем гулять в парк!",
+            Status.NEW,
+            20,
+            LocalDateTime.of(2001, 10, 10, 10, 10)
         );
 
         Task task2 = new Task(
-                "Поиграть с кошкой",
-                "Достань игрушки!",
-                Status.NEW
+            "Поиграть с кошкой",
+            "Достань игрушки!",
+            Status.NEW
         );
 
         Subtask subtask5 = new Subtask(
-                "Собрать вещи",
-                "Возьми все самое нужное с собой",
-                Status.NEW,
-                10,
-                LocalDateTime.of(2001, 10, 10, 10, 10)
+            "Собрать вещи",
+            "Возьми все самое нужное с собой",
+            Status.NEW,
+            10,
+            LocalDateTime.of(2001, 10, 10, 10, 10)
         );
 
         Subtask subtask6 = new Subtask(
-                "Найди жилье",
-                "Поищи объявления об аренде",
-                Status.NEW,
-                20,
-                LocalDateTime.of(2001, 11, 11, 11, 11)
+            "Найди жилье",
+            "Поищи объявления об аренде",
+            Status.NEW,
+            20,
+            LocalDateTime.of(2001, 11, 11, 11, 11)
         );
 
         ArrayList<Subtask> subtasksForEpic3 = new ArrayList<>();
@@ -70,11 +70,11 @@ public class HttpTaskManagerTest {
         subtasksForEpic3.add(subtask6);
 
         Epic epic3 = new Epic(
-                3,
-                "Переезд",
-                "Едем жить на море",
-                Status.NEW,
-                subtasksForEpic3
+            3,
+            "Переезд",
+            "Едем жить на море",
+            Status.NEW,
+            subtasksForEpic3
         );
 
         httpTaskManager.createNewTask(task1);
@@ -82,10 +82,9 @@ public class HttpTaskManagerTest {
         httpTaskManager.createNewEpic(epic3);
         httpTaskManager.createNewSubtask(subtask5);
         httpTaskManager.createNewSubtask(subtask6);
-        httpTaskManager.historyManager.add(httpTaskManager.getTaskById(1));
-        httpTaskManager.historyManager.add(httpTaskManager.getTaskById(6));
-        httpTaskManager.historyManager.add(httpTaskManager.getTaskById(2));
-        httpTaskManager.getPrioritizedTasks();
+        httpTaskManager.historyManager.add(task1);
+        httpTaskManager.historyManager.add(epic3);
+        httpTaskManager.historyManager.add(subtask5);
         httpTaskManager.save();
 
         HttpTaskManager newTaskManager = (HttpTaskManager) Managers.getDefault();
@@ -93,13 +92,55 @@ public class HttpTaskManagerTest {
         compareTwoManagers(httpTaskManager, newTaskManager);
     }
 
-    private void compareTwoManagers(HttpTaskManager first, HttpTaskManager second) {
-        for (Task firstPrioritizedTask : first.getPrioritizedTasks()) {
-            for (Task secondPrioritizedTask : second.getPrioritizedTasks()) {
-                assertEquals(firstPrioritizedTask, secondPrioritizedTask);
-            }
+    private void compareTwoManagers(HttpTaskManager actualManager, HttpTaskManager expectedManager) {
+        int i = 0;
+        Task expectedTask;
+        Task task;
+        while (i < expectedManager.getTasks().size()) {
+            expectedTask = expectedManager.getTasks().get(i);
+            task = actualManager.getTasks().get(i);
+
+            assertEquals(expectedTask.getId(), task.getId());
+            assertEquals(expectedTask.getStatus(), task.getStatus());
+            assertEquals(expectedTask.getStartTime(), task.getStartTime());
+            assertEquals(expectedTask.getName(), task.getName());
+            assertEquals(expectedTask.getDuration(), task.getDuration());
+            assertEquals(expectedTask.getDescription(), task.getDescription());
+            assertEquals(expectedTask.getType(), task.getType());
+
+            i++;
         }
 
+        i = 0;
+        while (i < expectedManager.historyManager.getHistory().size()) {
+            expectedTask = expectedManager.historyManager.getHistory().get(i);
+            task = actualManager.historyManager.getHistory().get(i);
 
+            assertEquals(expectedTask.getId(), task.getId());
+            assertEquals(expectedTask.getStatus(), task.getStatus());
+            assertEquals(expectedTask.getStartTime(), task.getStartTime());
+            assertEquals(expectedTask.getName(), task.getName());
+            assertEquals(expectedTask.getDuration(), task.getDuration());
+            assertEquals(expectedTask.getDescription(), task.getDescription());
+            assertEquals(expectedTask.getType(), task.getType());
+
+            i++;
+        }
+
+        i = 0;
+        while (i < expectedManager.getPrioritizedTasks().size()) {
+            expectedTask = expectedManager.getPrioritizedTasks().get(i);
+            task = actualManager.getPrioritizedTasks().get(i);
+
+            assertEquals(expectedTask.getId(), task.getId());
+            assertEquals(expectedTask.getStatus(), task.getStatus());
+            assertEquals(expectedTask.getStartTime(), task.getStartTime());
+            assertEquals(expectedTask.getName(), task.getName());
+            assertEquals(expectedTask.getDuration(), task.getDuration());
+            assertEquals(expectedTask.getDescription(), task.getDescription());
+            assertEquals(expectedTask.getType(), task.getType());
+
+            i++;
+        }
     }
 }

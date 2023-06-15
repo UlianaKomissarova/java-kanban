@@ -119,49 +119,49 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 Subtask subtask = (Subtask) task;
                 if (task.getStartTime() != null && task.getDuration() != 0) {
                     taskInfo = String.format(
-                            "%d,%s,%s,%s,%s,%d,%s,%d",
-                            subtask.getId(),
-                            subtask.getType(),
-                            subtask.getName(),
-                            subtask.getStatus(),
-                            subtask.getDescription(),
-                            subtask.getDuration(),
-                            subtask.getStartTime().format(formatter),
-                            subtask.getEpicId()
+                        "%d,%s,%s,%s,%s,%d,%s,%d",
+                        subtask.getId(),
+                        subtask.getType(),
+                        subtask.getName(),
+                        subtask.getStatus(),
+                        subtask.getDescription(),
+                        subtask.getDuration(),
+                        subtask.getStartTime().format(formatter),
+                        subtask.getEpicId()
                     );
                 } else {
                     taskInfo = String.format(
-                            "%d,%s,%s,%s,%s,%d,%s,%d",
-                            subtask.getId(),
-                            subtask.getType(),
-                            subtask.getName(),
-                            subtask.getStatus(),
-                            subtask.getDescription(),
-                            0,
-                            null,
-                            subtask.getEpicId()
+                        "%d,%s,%s,%s,%s,%d,%s,%d",
+                        subtask.getId(),
+                        subtask.getType(),
+                        subtask.getName(),
+                        subtask.getStatus(),
+                        subtask.getDescription(),
+                        0,
+                        null,
+                        subtask.getEpicId()
                     );
                 }
-            } else  {
+            } else {
                 if (task.getStartTime() != null && task.getDuration() != 0 && !(task instanceof Epic)) {
                     taskInfo = String.format(
-                            "%d,%s,%s,%s,%s,%d,%s",
-                            task.getId(),
-                            task.getType(),
-                            task.getName(),
-                            task.getStatus(),
-                            task.getDescription(),
-                            task.getDuration(),
-                            task.getStartTime().format(formatter)
+                        "%d,%s,%s,%s,%s,%d,%s",
+                        task.getId(),
+                        task.getType(),
+                        task.getName(),
+                        task.getStatus(),
+                        task.getDescription(),
+                        task.getDuration(),
+                        task.getStartTime().format(formatter)
                     );
                 } else {
                     taskInfo = String.format(
-                            "%d,%s,%s,%s,%s",
-                            task.getId(),
-                            task.getType(),
-                            task.getName(),
-                            task.getStatus(),
-                            task.getDescription()
+                        "%d,%s,%s,%s,%s",
+                        task.getId(),
+                        task.getType(),
+                        task.getName(),
+                        task.getStatus(),
+                        task.getDescription()
                     );
                 }
             }
@@ -178,18 +178,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 Subtask subtask;
                 if (split.length == 8 && Integer.parseInt(split[5]) != 0 && split[6] != null) {
                     subtask = new Subtask(
-                            split[2],
-                            split[4],
-                            Status.valueOf(split[3]),
-                            Integer.parseInt(split[5]),
-                            LocalDateTime.parse(split[6], formatter)
+                        split[2],
+                        split[4],
+                        Status.valueOf(split[3]),
+                        Integer.parseInt(split[5]),
+                        LocalDateTime.parse(split[6], formatter)
                     );
                     this.linkSubtaskWithEpic(subtask, Integer.valueOf(split[7]));
                 } else {
                     subtask = new Subtask(
-                            split[2],
-                            split[4],
-                            Status.valueOf(split[3])
+                        split[2],
+                        split[4],
+                        Status.valueOf(split[3])
                     );
                     this.linkSubtaskWithEpic(subtask, Integer.valueOf(split[5]));
                 }
@@ -198,28 +198,28 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 Task task;
                 if (split.length == 7 && Integer.parseInt(split[5]) != 0 && split[6] != null) {
                     task = new Task(
-                            split[2],
-                            split[4],
-                            Status.valueOf(split[3]),
-                            Integer.parseInt(split[5]),
-                            LocalDateTime.parse(split[6], formatter)
+                        split[2],
+                        split[4],
+                        Status.valueOf(split[3]),
+                        Integer.parseInt(split[5]),
+                        LocalDateTime.parse(split[6], formatter)
                     );
                 } else {
                     task = new Task(
-                            split[2],
-                            split[4],
-                            Status.valueOf(split[3])
+                        split[2],
+                        split[4],
+                        Status.valueOf(split[3])
                     );
                 }
 
                 return task;
             case "EPIC":
                 return new Epic(
-                        Integer.parseInt(split[0]),
-                        split[2],
-                        split[4],
-                        Status.valueOf(split[3]),
-                        new ArrayList<>()
+                    Integer.parseInt(split[0]),
+                    split[2],
+                    split[4],
+                    Status.valueOf(split[3]),
+                    new ArrayList<>()
                 );
             default:
                 return null;

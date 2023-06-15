@@ -24,9 +24,9 @@ public class Managers {
 
     public static Gson getGson() {
         return new GsonBuilder()
-                .setPrettyPrinting()
-                .serializeNulls()
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .create();
+            .setPrettyPrinting()
+            .serializeNulls()
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
     }
 }

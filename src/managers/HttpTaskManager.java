@@ -52,27 +52,27 @@ public class HttpTaskManager extends FileBackedTasksManager {
         String tasksFromJson = client.load(tasksKey);
         if (tasksFromJson != null && !tasksFromJson.isBlank()) {
             taskMap = gson.fromJson(
-                    tasksFromJson,
-                    new TypeToken<HashMap<Integer, Task>>() {
-                    }.getType()
+                tasksFromJson,
+                new TypeToken<HashMap<Integer, Task>>() {
+                }.getType()
             );
         }
 
         String subtasksFromJson = client.load(subtasksKey);
         if (subtasksFromJson != null && !tasksFromJson.isBlank()) {
             subtaskMap = gson.fromJson(
-                    subtasksFromJson,
-                    new TypeToken<HashMap<Integer, Subtask>>() {
-                    }.getType()
+                subtasksFromJson,
+                new TypeToken<HashMap<Integer, Subtask>>() {
+                }.getType()
             );
         }
 
         String epicsFromJson = client.load(epicsKey);
         if (epicsFromJson != null && !tasksFromJson.isBlank()) {
             epicMap = gson.fromJson(
-                    epicsFromJson,
-                    new TypeToken<HashMap<Integer, Epic>>() {
-                    }.getType()
+                epicsFromJson,
+                new TypeToken<HashMap<Integer, Epic>>() {
+                }.getType()
             );
         }
 
@@ -80,9 +80,9 @@ public class HttpTaskManager extends FileBackedTasksManager {
         String historyFromJson = client.load(historyKey);
         if (historyFromJson != null && !tasksFromJson.isBlank()) {
             List<Task> history = gson.fromJson(
-                    historyFromJson,
-                    new TypeToken<List<Task>>() {
-                    }.getType()
+                historyFromJson,
+                new TypeToken<List<Task>>() {
+                }.getType()
             );
             for (Task task : history) {
                 historyManager.add(task);
@@ -92,9 +92,9 @@ public class HttpTaskManager extends FileBackedTasksManager {
         String prioritizedTasksFromJson = client.load(prioritizedTasksKey);
         if (prioritizedTasksFromJson != null && !tasksFromJson.isBlank()) {
             taskTreeSet = gson.fromJson(
-                    prioritizedTasksFromJson,
-                    new TypeToken<TreeSet<Task>>() {
-                    }.getType()
+                prioritizedTasksFromJson,
+                new TypeToken<TreeSet<Task>>() {
+                }.getType()
             );
         }
     }

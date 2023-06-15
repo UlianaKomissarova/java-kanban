@@ -36,6 +36,10 @@ public class HttpTaskServer {
         server.createContext("/tasks", this::handlePrioritizedTasks);
     }
 
+    public FileBackedTasksManager getTaskManager() {
+        return taskManager;
+    }
+
     public void start() {
         server.start();
     }
@@ -52,7 +56,7 @@ public class HttpTaskServer {
                 getAndSendPrioritizedTasks(httpExchange, query);
             } else if (requestMethod.equals("DELETE")) {
                 taskManager.removeAllTasks();
-                httpExchange.sendResponseHeaders(201, 0);
+                httpExchange.sendResponseHeaders(200, 0);
             } else {
                 System.out.println("Ожидается GET запрос, получен некорректный запрос " + requestMethod);
                 httpExchange.sendResponseHeaders(405, 0);
@@ -68,7 +72,7 @@ public class HttpTaskServer {
         if (query == null) {
             ArrayList<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
             if (prioritizedTasks != null) {
-                httpExchange.sendResponseHeaders(201, 0);
+                httpExchange.sendResponseHeaders(200, 0);
                 String response = gson.toJson(prioritizedTasks);
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     os.write(response.getBytes(StandardCharsets.UTF_8));
@@ -102,7 +106,7 @@ public class HttpTaskServer {
         if (query == null) {
             List<Task> history = taskManager.historyManager.getHistory();
             if (history != null) {
-                httpExchange.sendResponseHeaders(201, 0);
+                httpExchange.sendResponseHeaders(200, 0);
                 String response = gson.toJson(history);
                 try (OutputStream os = httpExchange.getResponseBody()) {
                     os.write(response.getBytes(StandardCharsets.UTF_8));
@@ -247,7 +251,9 @@ public class HttpTaskServer {
             if (query.startsWith("id=")) {
                 String[] split = query.split("&")[0].split("=");
                 Integer taskId = Integer.parseInt(split[1]);
-                if (taskId != -1) {
+
+                Task task = taskManager.getTaskById(taskId);
+                if (task != null) {
                     System.out.println("Удалена задача " + taskManager.getTaskById(taskId).getName());
                     taskManager.removeTaskById(taskId);
                     httpExchange.sendResponseHeaders(200, 0);
@@ -285,7 +291,7 @@ public class HttpTaskServer {
             System.out.println("Обновлена задача " + task.getName());
         }
 
-        httpExchange.sendResponseHeaders(201, 0);
+        httpExchange.sendResponseHeaders(200, 0);
         String response = Boolean.toString(true);
         try (OutputStream os = httpExchange.getResponseBody()) {
             os.write(response.getBytes(StandardCharsets.UTF_8));
