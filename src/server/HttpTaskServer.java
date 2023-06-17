@@ -105,14 +105,10 @@ public class HttpTaskServer {
     private void getAndSendHistory(HttpExchange httpExchange, String query) throws IOException {
         if (query == null) {
             List<Task> history = taskManager.historyManager.getHistory();
-            if (history != null) {
-                httpExchange.sendResponseHeaders(200, 0);
-                String response = gson.toJson(history);
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    os.write(response.getBytes(StandardCharsets.UTF_8));
-                }
-            } else {
-                httpExchange.sendResponseHeaders(400, 0);
+            httpExchange.sendResponseHeaders(200, 0);
+            String response = gson.toJson(history);
+            try (OutputStream os = httpExchange.getResponseBody()) {
+                os.write(response.getBytes(StandardCharsets.UTF_8));
             }
         } else {
             httpExchange.sendResponseHeaders(400, 0);
